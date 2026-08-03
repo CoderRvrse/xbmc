@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!--
+  Kodi media sources.
+
+  Two groups here:
+
+  1. LIBRARY sources (D:\Kodi\Media\...) - empty skeleton folders, ready for you
+     to drop films/shows into. Assign a scraper to these once (see KODI-SETUP.md)
+     and Kodi builds a proper library with posters, fanart and metadata.
+
+  2. BROWSE sources (your existing Videos/Music/Pictures) - real content you
+     already have (game clips, screen recordings, sound effects, photos).
+     These are deliberately left WITHOUT a scraper: TMDB/TVDB would match
+     nothing against "Roblox clip 04.mp4" and would just pollute the library.
+     They browse as plain files, which is the correct mode for this content.
+-->
+<sources>
+
+  <programs>
+    <default pathversion="1"></default>
+  </programs>
+
+  <video>
+    <default pathversion="1"></default>
+
+    <!-- ---- Library (scraper-ready, currently empty) ---- -->
+    <source>
+      <name>Movies</name>
+      <path pathversion="1">D:\Kodi\Media\Movies\</path>
+      <allowsharing>true</allowsharing>
+    </source>
+    <source>
+      <name>TV Shows</name>
+      <path pathversion="1">D:\Kodi\Media\TV Shows\</path>
+      <allowsharing>true</allowsharing>
+    </source>
+    <source>
+      <name>Music Videos</name>
+      <path pathversion="1">D:\Kodi\Media\Music Videos\</path>
+      <allowsharing>true</allowsharing>
+    </source>
+    <source>
+      <name>Home Videos</name>
+      <path pathversion="1">D:\Kodi\Media\Home Videos\</path>
+      <allowsharing>true</allowsharing>
+    </source>
+
+    <!-- ---- Browse-only (your existing clips/recordings) ---- -->
+    <source>
+      <name>PC Captures &amp; Clips</name>
+      <path pathversion="1">C:\Users\Franc\Videos\</path>
+      <allowsharing>true</allowsharing>
+    </source>
+  </video>
+
+  <music>
+    <default pathversion="1"></default>
+    <source>
+      <name>Music Library</name>
+      <path pathversion="1">D:\Kodi\Media\Music\</path>
+      <allowsharing>true</allowsharing>
+    </source>
+    <source>
+      <name>PC Music</name>
+      <path pathversion="1">C:\Users\Franc\Music\</path>
+      <allowsharing>true</allowsharing>
+    </source>
+  </music>
+
+  <pictures>
+    <default pathversion="1"></default>
+    <source>
+      <name>Pictures</name>
+      <path pathversion="1">C:\Users\Franc\Pictures\</path>
+      <allowsharing>true</allowsharing>
+    </source>
+  </pictures>
+
+  <files>
+    <default pathversion="1"></default>
+    <source>
+      <name>Kodi Media Root</name>
+      <path pathversion="1">D:\Kodi\Media\</path>
+      <allowsharing>true</allowsharing>
+    </source>
+  </files>
+
+  <games>
+    <default pathversion="1"></default>
+  </games>
+
+</sources>

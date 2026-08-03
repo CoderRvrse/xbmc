@@ -1,0 +1,5 @@
+# Kodi runtime noise
+*.log
+*.bak
+__pycache__/
+*.pyc

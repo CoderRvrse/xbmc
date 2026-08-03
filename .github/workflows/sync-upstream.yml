@@ -1,0 +1,63 @@
+name: Sync fork with upstream
+
+# Keeps this fork's mirror branches identical to xbmc/xbmc, forever, hands-off.
+#
+# Design note: the mirror branches (master / Omega / Nexus) are kept PRISTINE --
+# nothing of ours is ever committed to them. That is what lets every sync be a
+# clean fast-forward instead of a merge that will eventually conflict.
+# All of our own files live on the `kodi-toolkit` branch (the default branch),
+# which is also why this workflow can run on a schedule: GitHub only runs
+# scheduled workflows from a repository's DEFAULT branch.
+
+on:
+  schedule:
+    # 05:17 UTC daily. Deliberately not on the hour -- GitHub heavily delays
+    # cron jobs scheduled at :00 because everyone picks it.
+    - cron: '17 5 * * *'
+  workflow_dispatch:        # lets you run it on demand from the Actions tab
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-upstream
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false      # Omega failing must not stop master from syncing
+      matrix:
+        branch: [master, Omega, Nexus]
+
+    steps:
+      - name: Fast-forward ${{ matrix.branch }} from xbmc/xbmc
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh repo sync "${{ github.repository }}" \
+            --source xbmc/xbmc \
+            --branch "${{ matrix.branch }}"
+
+      - name: Report
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mine=$(gh api "repos/${{ github.repository }}/commits/${{ matrix.branch }}" --jq '.sha' 2>/dev/null || echo "n/a")
+          theirs=$(gh api "repos/xbmc/xbmc/commits/${{ matrix.branch }}" --jq '.sha' 2>/dev/null || echo "n/a")
+          {
+            echo "### \`${{ matrix.branch }}\`"
+            echo ""
+            echo "| | commit |"
+            echo "|---|---|"
+            echo "| fork     | \`${mine:0:12}\` |"
+            echo "| upstream | \`${theirs:0:12}\` |"
+            echo ""
+            if [ "$mine" = "$theirs" ]; then
+              echo ":white_check_mark: in sync"
+            else
+              echo ":warning: still differs - branch may have diverged; see the log above"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"

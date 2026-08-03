@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!--
+  Kodi 21.3 "Omega" - advancedsettings.xml
+  Tuned for: Intel i7-13700KF (16C/24T) | NVIDIA RTX 4070 | 63.8 GB RAM | 1080p60
+
+  Kodi READS this file at startup and NEVER writes to it, so anything set here
+  survives every settings change, addon install and version upgrade.
+  Settings NOT listed here keep their Kodi defaults.
+
+  Docs: https://kodi.wiki/view/Advancedsettings.xml
+-->
+<advancedsettings version="1.0">
+
+  <!-- ============================================================
+       CACHE / BUFFERING
+       Kodi reserves memorysize x3 (read + write + overhead).
+       500 MB here => ~1.5 GB reserved, which is 2.3% of 63.8 GB.
+       ============================================================ -->
+  <cache>
+    <!-- 0=internet only (default)  1=all filesystems  2=true internet only  3=disabled -->
+    <buffermode>1</buffermode>
+
+    <!-- Bytes. 500 MB. Large cache = no stutter on high-bitrate remux/4K files. -->
+    <memorysize>524288000</memorysize>
+
+    <!-- How fast Kodi fills the cache vs. the playback rate.
+         Default is 4. 20 = fill aggressively; safe on NVMe/gigabit. -->
+    <readfactor>20</readfactor>
+  </cache>
+
+  <!-- ============================================================
+       NETWORK - be patient with slow sources before giving up
+       ============================================================ -->
+  <network>
+    <curlclienttimeout>30</curlclienttimeout>
+    <curllowspeedtime>20</curllowspeedtime>
+  </network>
+
+  <!-- ============================================================
+       PLAYBACK / WATCHED-STATE BEHAVIOUR
+       ============================================================ -->
+  <video>
+    <!-- Don't mark "resume" if you bail out in the first 3 minutes. -->
+    <ignoresecondsatstart>180</ignoresecondsatstart>
+    <!-- Mark watched at 90% instead of 100% so credits don't block it. -->
+    <playcountminimumpercent>90</playcountminimumpercent>
+    <!-- Treat the last 8% as "finished" (skips end credits). -->
+    <ignorepercentatend>8</ignorepercentatend>
+  </video>
+
+  <!-- ============================================================
+       VIDEO LIBRARY
+       ============================================================ -->
+  <videolibrary>
+    <!-- Hide TV shows whose episodes are all missing from disk. -->
+    <showemptytvshows>false</showemptytvshows>
+    <!-- Purge entries for deleted files on every library update. -->
+    <cleanonupdate>true</cleanonupdate>
+  </videolibrary>
+
+  <!-- ============================================================
+       MUSIC LIBRARY
+       ============================================================ -->
+  <musiclibrary>
+    <!-- Fetch full artist/album art + bios during scan. -->
+    <downloadinfo>true</downloadinfo>
+    <cleanonupdate>true</cleanonupdate>
+  </musiclibrary>
+
+  <!-- ============================================================
+       GUI
+       ============================================================ -->
+  <gui>
+    <!-- 3 = whole-screen redraw. Costs nothing on an RTX 4070 and avoids
+         the occasional dirty-region artifact some skins produce. -->
+    <algorithmdirtyregions>3</algorithmdirtyregions>
+  </gui>
+
+  <!-- 0 = normal logging. Set to 1 for debug when troubleshooting. -->
+  <loglevel>0</loglevel>
+
+</advancedsettings>
